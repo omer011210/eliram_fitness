@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>תוכנית אימונים ותזונה זוגית</title>
+<meta name="description" content="תוכנית אימונים ותזונה זוגית של אלירם ודוריאן: לוח אימונים שבועי, תפריט יומי, מעקב ביצוע ורישום משקלים — עובד גם בלי קליטה.">
+<meta name="theme-color" content="#F6F7F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1A22" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://omer011210.github.io/eliram_fitness/">
+
+<!-- Open Graph / WhatsApp preview -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:site_name" content="אימונים זוגיים">
+<meta property="og:title" content="תוכנית אימונים ותזונה זוגית 💪">
+<meta property="og:description" content="אלירם ודוריאן · לוח אימונים שבועי, תפריט יומי, מעקב ביצוע ומשקלים — מסונכרן בין שניכם.">
+<meta property="og:url" content="https://omer011210.github.io/eliram_fitness/">
+<meta property="og:image" content="https://omer011210.github.io/eliram_fitness/og.png">
+<meta property="og:image:secure_url" content="https://omer011210.github.io/eliram_fitness/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="תוכנית אימונים ותזונה זוגית">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="תוכנית אימונים ותזונה זוגית">
+<meta name="twitter:image" content="https://omer011210.github.io/eliram_fitness/og.png">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="אימונים">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script>
+  // theme before first paint (avoids a light flash for users who picked dark)
+  try{var t=localStorage.getItem('ef-theme'); if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);}catch(e){}
+</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <div class="nav-title">תוכנית אימונים<span class="t-long"> · דף מאמן</span></div>
+    <nav class="nav-links">
+      <a href="#today">היום</a>
+      <a href="#plan">לוח אימונים</a>
+      <a href="#nutrition">תזונה</a>
+      <a href="#recovery">התאוששות</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="openSettings" type="button" title="הגדרות, סנכרון ושיתוף" aria-label="הגדרות">⚙<span class="sync-dot" id="syncDot" hidden></span></button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div id="banners"></div>
+
+  <section class="today" id="today">
+    <div class="today-top">
+      <div>
+        <p class="today-date" id="todayDate"></p>
+        <h2 id="todayTitle">היום</h2>
+      </div>
+      <div class="day-nav">
+        <button type="button" id="dayPrev" aria-label="היום הקודם">→</button>
+        <button type="button" id="dayNow">היום</button>
+        <button type="button" id="dayNext" aria-label="היום הבא">←</button>
+      </div>
+    </div>
+
+    <div class="whoami" id="whoami" hidden>
+      <p>מי משתמש/ת בטלפון הזה?</p>
+      <div class="btns">
+        <button class="btn primary" type="button" data-me="a"></button>
+        <button class="btn primary" type="button" data-me="b"></button>
+      </div>
+    </div>
+
+    <div class="today-bar">
+      <div class="seg" id="personSeg" role="tablist" aria-label="מעקב עבור">
+        <button type="button" data-p="a"></button>
+        <button type="button" data-p="b"></button>
+      </div>
+      <label class="toggle"><input type="checkbox" id="onlyMine"> הצג רק שלי</label>
+      <div class="progress"><div class="progress-track"><div class="progress-fill" id="progFill"></div></div><span id="progText"></span></div>
+    </div>
+
+    <div class="today-grid">
+      <div class="t-card" id="todayWorkout"></div>
+      <div class="t-card" id="todayMeals"></div>
+    </div>
+  </section>
+
+  <section class="hero" style="padding-top:40px;">
+    <p class="kicker">תוכנית אימונים שבועית מותאמת אישית</p>
+    <h1>חיטוב, חיזוק ובניית מסת שריר — בלי לוותר על הברכיים</h1>
+    <p class="lede">תוכנית משולבת כוח, ריצה ו-HIIT שבנויה סביב שיפור כושר אירובי, חיזוק מסת שריר והגנה פעילה על מפרקי הברכיים. כל אימון עד 60 דקות, עם עומס הדרגתי ושליטה בטכניקה.</p>
+    <div class="stat-row">
+      <div class="stat"><b>עד 60 דק'</b>משך אימון מרבי</div>
+      <div class="stat"><b>5–10 דק'</b>חימום דינמי</div>
+      <div class="stat"><b>60–90 שנ'</b>מנוחה בין סטים</div>
+      <div class="stat"><b>8–12</b>טווח חזרות לעומס</div>
+    </div>
+  </section>
+
+  <section id="plan">
+    <div class="section-head">
+      <h2>לוח אימונים שבועי</h2>
+      <span class="section-note">בחרו יום · ערכו, גררו והעבירו כרטיסיות</span>
+    </div>
+    <p class="nutri-hint">כל יום מתחיל מהתוכנית המקורית. אפשר לשנות תרגילים, סטים וחזרות ישירות בכרטיסייה, לגרור את ⠿ (או ללחוץ על החצים) כדי לשנות סדר, להעביר כרטיסייה ליום אחר, להוסיף כרטיסיות מתבנית ולהסיר ולשחזר.</p>
+    <div class="day-tabs" id="wkTabs"></div>
+    <div id="wkPanels"></div>
+    <button class="wk-reset" id="wkReset" type="button">איפוס הלוח לתוכנית המקורית</button>
+  </section>
+
+  <section id="nutrition">
+    <div class="section-head">
+      <h2>תפריט תזונה יומי — תפריט זוגי</h2>
+      <span class="section-note">בחרו יום והתאימו אותו אישית</span>
+    </div>
+    <p class="nutri-hint">כל יום בשבוע מתחיל מאותה תבנית — ואפשר לגרור, להחליף אופציה, להוסיף, להסיר ולשחזר ארוחות בנפרד לכל יום.</p>
+
+    <div class="stat-row" style="margin-bottom:26px;">
+      <div class="stat" data-p="a"><b>~100 גרם</b>חלבון יומי עבור <span class="pname" data-p="a"></span></div>
+      <div class="stat" data-p="b"><b>~70 גרם</b>חלבון יומי עבור <span class="pname" data-p="b"></span></div>
+      <div class="stat"><b>3+ ליטר</b>מים ביום</div>
+      <div class="stat"><b>גמישות מלאה</b>בין הארוחות</div>
+    </div>
+
+    <div class="day-tabs" id="dayTabs"></div>
+    <div id="dayPanels"></div>
+  </section>
+
+  <section id="recovery">
+    <div class="section-head">
+      <h2>דגשי מאמן להתאוששות והגנה על הברכיים</h2>
+    </div>
+    <div class="tips">
+      <div class="tip"><div class="n">1</div><p><strong>טכניקה לפני משקל.</strong> שליטה בתנועה וירידה מבוקרת בכל תרגילי הרגליים והמתח.</p></div>
+      <div class="tip"><div class="n">2</div><p><strong>חימום ברכיים.</strong> חימום מפרקי לקרסוליים ולארבע-ראשי לפני אימון C ולפני הריצות.</p></div>
+      <div class="tip"><div class="n">3</div><p><strong>תזונה לחיטוב.</strong> גירעון קלורי מתון, 1.8–2.2 גרם חלבון לק"ג משקל גוף, וכ-3 ליטר מים ביום.</p></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p>הדף מוכן להתאמה אישית בכל שלב — שינוי תרגילים, ימים, יעדים או הוספת תפריט תזונה. הנתונים נשמרים במכשיר ועובדים גם בלי קליטה.</p>
+</footer>
+
+<dialog class="sheet" id="settings" aria-labelledby="settingsTitle">
+  <div class="sheet-head">
+    <h2 id="settingsTitle">הגדרות</h2>
+    <button class="icon-btn" type="button" data-close aria-label="סגירה">✕</button>
+  </div>
+  <div class="sheet-body">
+    <div class="set-group">
+      <h3>פרופילים</h3>
+      <p class="help">השמות מופיעים בתפריט ובמעקב במקום "עבורך / עבורה".</p>
+      <div class="field-row">
+        <label class="field">שם ראשון<input id="nameA" maxlength="24" autocomplete="off"></label>
+        <label class="field">שם שני<input id="nameB" maxlength="24" autocomplete="off"></label>
+      </div>
+      <p class="help" style="margin:12px 0 6px;">מי משתמש/ת במכשיר הזה?</p>
+      <div class="seg" id="meSeg"><button type="button" data-me="a"></button><button type="button" data-me="b"></button></div>
+    </div>
+
+    <div class="set-group">
+      <h3>ערכת צבעים</h3>
+      <div class="seg" id="themeSeg"><button type="button" data-theme="auto">אוטומטי</button><button type="button" data-theme="light">בהיר</button><button type="button" data-theme="dark">כהה</button></div>
+    </div>
+
+    <div class="set-group" id="syncGroup">
+      <h3>סנכרון זוגי</h3>
+      <div id="syncBox"></div>
+    </div>
+
+    <div class="set-group">
+      <h3>שיתוף קישור</h3>
+      <p class="help">יוצר קישור שמכיל את כל התוכנית, התפריט והמעקב (דחוס). מי שפותח אותו מקבל עותק מלא — עובד גם בלי סנכרון.</p>
+      <div class="row-gap"><button class="btn primary" type="button" id="shareLink">🔗 שתף קישור</button><span class="help" id="shareInfo"></span></div>
+    </div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><span id="toastText"></span><button type="button" id="toastBtn" hidden></button></div>
+
+<script src="js/firebase-config.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

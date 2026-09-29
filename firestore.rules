@@ -1,0 +1,40 @@
+rules_version = '2';
+
+// גישה רק למסמך של זוג, לפי "קוד הזוג" (16 תווים אקראיים, ~80 ביט).
+// אין אפשרות לרשום (list) את כל הזוגות — אז בלי הקוד אי אפשר למצוא את המסמך.
+// נדרשת התחברות אנונימית (Authentication → Anonymous) כדי לחסום סקריפטים אקראיים.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function validCode(code) {
+      return code.matches('^[A-HJ-NP-Z2-9]{4}-[A-HJ-NP-Z2-9]{4}-[A-HJ-NP-Z2-9]{4}-[A-HJ-NP-Z2-9]{4}$');
+    }
+
+    function okField(d, f, max) {
+      return !(f in d) || (d[f] is string && d[f].size() <= max);
+    }
+
+    function validDoc(d) {
+      return d.keys().hasOnly(['profiles', 'plan', 'nutri', 'done_a', 'done_b', 'logs_a', 'logs_b', 'updatedAt'])
+        && okField(d, 'profiles', 2000)
+        && okField(d, 'plan', 200000)
+        && okField(d, 'nutri', 200000)
+        && okField(d, 'done_a', 50000)
+        && okField(d, 'done_b', 50000)
+        && okField(d, 'logs_a', 150000)
+        && okField(d, 'logs_b', 150000)
+        && d.updatedAt == request.time;
+    }
+
+    match /pairs/{code} {
+      allow get: if request.auth != null && validCode(code);
+      allow create, update: if request.auth != null && validCode(code) && validDoc(request.resource.data);
+      allow list, delete: if false;
+    }
+
+    // כל השאר חסום
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
