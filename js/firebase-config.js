@@ -6,10 +6,10 @@
  * הוראות מלאות: README.md
  */
 window.FIREBASE_CONFIG = {
-  apiKey: "PASTE_API_KEY",
-  authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
-  projectId: "PASTE_PROJECT_ID",
-  storageBucket: "PASTE_PROJECT_ID.firebasestorage.app",
-  messagingSenderId: "PASTE_SENDER_ID",
-  appId: "PASTE_APP_ID"
+  apiKey: "AIzaSyDR439BH5jE5oQs99JDye12eJYECgjHlUM",
+  authDomain: "eliram-fitness.firebaseapp.com",
+  projectId: "eliram-fitness",
+  storageBucket: "eliram-fitness.firebasestorage.app",
+  messagingSenderId: "49707435270",
+  appId: "1:49707435270:web:e5b178a38a7bc570c28a87"
 };
